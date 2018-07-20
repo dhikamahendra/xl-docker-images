@@ -4,23 +4,21 @@ services:
     image: xebialabs/xl-deploy:8.1
     container_name: xl-deploy
     ports:
-     - "4516:4516"
+    - "4516:4516"
     volumes:
-     - ~/XebiaLabs/xl-deploy-server/conf:/opt/xl-deploy-server/conf
-     - ~/XebiaLabs/xl-deploy-server/ext:/opt/xl-deploy-server/ext
-     - ~/XebiaLabs/xl-deploy-server/hotfix/lib:/opt/xl-deploy-server/hotfix/lib
-     - ~/XebiaLabs/xl-deploy-server/hotfix/plugins:/opt/xl-deploy-server/hotfix/plugins
-     - ~/XebiaLabs/xl-deploy-server/plugins:/opt/xl-deploy-server/plugins
-     - ~/XebiaLabs/xl-deploy-server/repository:/opt/xl-deploy-server/repository
-    environment:
-     - ADMIN_PASSWORD=admin
+    - ~/XebiaLabs/xl-deploy-server/conf:/opt/xl-deploy-server/conf
+    - ~/XebiaLabs/xl-deploy-server/ext:/opt/xl-deploy-server/ext
+    - ~/XebiaLabs/xl-deploy-server/hotfix/lib:/opt/xl-deploy-server/hotfix/lib
+    - ~/XebiaLabs/xl-deploy-server/hotfix/plugins:/opt/xl-deploy-server/hotfix/plugins
+    - ~/XebiaLabs/xl-deploy-server/plugins:/opt/xl-deploy-server/plugins
+    - ~/XebiaLabs/xl-deploy-server/repository:/opt/xl-deploy-server/repository
 
   xl-release:
     image: xebialabs/xl-release:8.1
     container_name: xl-release
     ports:
      - "5516:5516"
-    links:
+    depends_on:
      - xl-deploy
     volumes:
      - ~/XebiaLabs/xl-release-server/archive:/opt/xl-release-server/archive
@@ -29,5 +27,3 @@ services:
      - ~/XebiaLabs/xl-release-server/hotfix/:/opt/xl-release-server/hotfix/
      - ~/XebiaLabs/xl-release-server/plugins:/opt/xl-release-server/plugins
      - ~/XebiaLabs/xl-release-server/repository:/opt/xl-release-server/repository
-    environment:
-     - ADMIN_PASSWORD=admin
